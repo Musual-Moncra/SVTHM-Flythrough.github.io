@@ -22,6 +22,9 @@
   document.addEventListener('DOMContentLoaded', boot);
 
   function boot() {
+    /* JS đã chạy thật sự mới thêm class 'js': chặn mọi URL chứa /js/ (kể cả ?v=)
+       thì nội dung phải hiện đầy đủ theo mặc định. */
+    document.documentElement.classList.add('js');
     reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduceMotion) document.documentElement.classList.add('reduced');
 
@@ -40,7 +43,7 @@
     if (!selector) return;
 
     // GitHub Pages project URL used when the site is opened from a local preview.
-    const publishedUrl = 'https://musual-moncra.github.io/svthm-flythrough/';
+    const publishedUrl = 'https://musual-moncra.github.io/SVTHM-Flythrough.github.io/';
     const currentUrl = /^https?:$/.test(window.location.protocol)
       ? window.location.href
       : publishedUrl;
@@ -255,20 +258,31 @@
     return { id: last.id, prog: stations.length - 1, paused: true, sub: 1 };
   }
 
+  /* nhịp cảnh: truy vấn DOM một lần, chỉ ghi class khi trạng thái đổi
+     (tránh sốc layout/compositing mỗi khung hình khi cuộn) */
+  var beatCache = { mapFrame: null, thumbs: null, pillar: null, mapped: null, lit: [], band: null };
   function applyBeats(state) {
-    var mapFrame = document.getElementById('origin-leaflet-map');
-    if (mapFrame) {
-      mapFrame.classList.toggle('is-mapped', state.id === 'origins' && state.paused && state.sub > 0.8);
+    if (!beatCache.mapFrame) beatCache.mapFrame = document.getElementById('origin-leaflet-map');
+    if (!beatCache.thumbs) beatCache.thumbs = Array.prototype.slice.call(document.querySelectorAll('.challenge-photo-thumb'));
+    if (!beatCache.pillar) beatCache.pillar = document.querySelector('.mission-pillars .glass-card[data-pillar="2"]');
+
+    var mapped = state.id === 'origins' && state.paused && state.sub > 0.8;
+    if (beatCache.mapFrame && mapped !== beatCache.mapped) {
+      beatCache.mapped = mapped;
+      beatCache.mapFrame.classList.toggle('is-mapped', mapped);
     }
-    var thumbs = document.querySelectorAll('.challenge-photo-thumb');
     var thresholds = [0.26, 0.52, 0.78];
-    Array.prototype.forEach.call(thumbs, function (fig, k) {
+    Array.prototype.forEach.call(beatCache.thumbs, function (fig, k) {
       var lit = state.id === 'challenge' && state.paused && state.sub > thresholds[k];
-      fig.classList.toggle('is-lit', lit);
+      if (beatCache.lit[k] !== lit) {
+        beatCache.lit[k] = lit;
+        fig.classList.toggle('is-lit', lit);
+      }
     });
-    var pillar = document.querySelector('.mission-pillars .glass-card[data-pillar="2"]');
-    if (pillar) {
-      pillar.classList.toggle('is-band', state.id === 'core' && state.paused && state.sub > 0.85);
+    var band = state.id === 'core' && state.paused && state.sub > 0.85;
+    if (beatCache.pillar && band !== beatCache.band) {
+      beatCache.band = band;
+      beatCache.pillar.classList.toggle('is-band', band);
     }
   }
 

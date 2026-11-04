@@ -14,16 +14,14 @@
   <!-- Favicon SVG -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 
-  <script>document.documentElement.classList.add('js');</script>
-
   <!-- Fonts: Space Grotesk (tiêu đề, nhãn) + Plus Jakarta Sans (nội dung), hỗ trợ tiếng Việt -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/style.css?v=fly-1">
-  <link rel="stylesheet" href="js/vendor/leaflet/leaflet.css?v=fly-1">
+  <link rel="stylesheet" href="css/style.css?v=fly-2">
+  <link rel="stylesheet" href="js/vendor/leaflet/leaflet.css?v=fly-2">
 </head>
 <body>
 
@@ -107,8 +105,10 @@
           <span>CÂU CHUYỆN TỪ LÀNG NGHỀ BÁNH TRÁNG PHÚ HÒA ĐÔNG</span>
         </div>
 
-        <h1 class="hero-title">PHÚ HÒA ĐÔNG LẮM VIỆC – GEN “ZIỆT” MỞ LỐI!</h1>
-        <p class="hero-subtitle"><strong>HSU lửa bánh bền lâu - đậm sâu làng nghề!</strong></p>
+        <div class="hero-panel">
+          <h1 class="hero-title">PHÚ HÒA ĐÔNG LẮM VIỆC – GEN “ZIỆT” MỞ LỐI!</h1>
+          <p class="hero-subtitle"><strong>HSU lửa bánh bền lâu - đậm sâu làng nghề!</strong></p>
+        </div>
 
         <!-- Biểu trưng dự án: canvas vẽ con dấu bắt lửa; ảnh dự phòng khi không có WebGL -->
         <div class="hero-seal-stage" aria-label="Biểu trưng 3D của dự án">
@@ -208,7 +208,7 @@
           <img src="assets/mmm.webp" alt="Thành viên nhóm ghi hình hoạt động làm bánh tráng" width="1305" height="2347" loading="lazy" decoding="async">
         </figure>
         <figure class="challenge-photo-thumb" data-story-reveal>
-          <img src="assets/mmmm.webp" alt="Thành viên nhóm tìm hiểu giàn phơi bánh tráng tại làng nghề" width="2000" height="1333" loading="lazy" decoding="async">
+          <img src="assets/mmmm.webp" alt="Thành viên nhóm tìm hiểu giàn phơi bánh tráng tại làng nghề" width="1333" height="2000" loading="lazy" decoding="async">
         </figure>
       </div>
       <div class="story-paragraphs chapter-narrative story-copy">
@@ -344,10 +344,10 @@
   <script src="js/vendor/three.min.js"></script>
 
   <!-- Leaflet bản đồ "ĐỊA ĐIỂM · PHÚ HÒA ĐÔNG" -->
-  <script src="js/vendor/leaflet/leaflet.js?v=fly-1"></script>
+  <script src="js/vendor/leaflet/leaflet.js?v=fly-2"></script>
 
   <!-- Application Logic -->
-  <script src="js/flame.js?v=fly-1"></script>
-  <script src="js/main.js?v=fly-1"></script>
+  <script src="js/flame.js?v=fly-2"></script>
+  <script src="js/main.js?v=fly-2"></script>
 </body>
 </html>
