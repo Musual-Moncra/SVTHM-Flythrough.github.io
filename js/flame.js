@@ -62,6 +62,10 @@ window.FlyScene = (function () {
   let inited = false;
   let clock = 0;
 
+  // Hàng đợi texture: tải lần lượt, upload chủ động ngoài khung cuộn
+  const texQueue = [];
+  let texBusy = false;
+
   const FLAME_CORE = [1.0, 0.915, 0.72];  // lõi sáng (không cháy trắng)
   const FLAME_MID = [0.96, 0.65, 0.14];   // #f5a623
   const FLAME_DEEP = [0.78, 0.31, 0.12];  // #c8501e
@@ -83,11 +87,13 @@ window.FlyScene = (function () {
     'uniform float uRMax;',
     'varying float vT;',
     'varying vec3 vNv;',
+    'varying float vDist;',
     'void main() {',
     '  vT = uv.x;',
     '  vNv = normalize(normalMatrix * normal);',
     '  vec4 wp = modelMatrix * vec4(position, 1.0);',
     '  float d = distance(cameraPosition, wp.xyz);',
+    '  vDist = d;',
     // Mọi ống dựng sẵn bán kính 0.001; đẩy mặt ra tới bán kính thực:
     // r * (h màn hình) / (d * tanHalf) = số px cần → r = d * uComp.
     '  float r = clamp(uComp * d * uMult, uRMin, uRMax);',
@@ -100,6 +106,7 @@ window.FlyScene = (function () {
     'precision mediump float;',
     'varying float vT;',
     'varying vec3 vNv;',
+    'varying float vDist;',
     'uniform float uHead;',
     'uniform float uWinA;',
     'uniform float uWinB;',
@@ -143,6 +150,8 @@ window.FlyScene = (function () {
     '  float centerW = abs(vNv.z);',
     '  float shape = 0.55 + 0.45 * pow(centerW, 1.3);',
     '  float a = vis * uAlpha * uBoost * shape;',
+    // Mờ dần khi sát camera: đường lửa "chạy ra khỏi màn hình" thay vì bị cắt ngang
+    '  a *= smoothstep(0.45, 1.9, vDist);',
     '  if (a < 0.005) { discard; }',
     '  gl_FragColor = vec4(col, a);',
     '}'
@@ -410,12 +419,13 @@ window.FlyScene = (function () {
       alphaTest: 0.04,
       side: THREE.DoubleSide
     });
-    new THREE.TextureLoader().load('assets/project-seal.webp', function (tex) {
-      tex.encoding = THREE.sRGBEncoding;
+    sealMesh = new THREE.Mesh(new THREE.PlaneGeometry(5.2, 4.9), sealMat);
+    sealMesh.visible = false;
+    queueTexture('assets/seal-3d.webp', function (tex) {
       sealMat.map = tex;
       sealMat.needsUpdate = true;
+      sealMesh.visible = true;
     });
-    sealMesh = new THREE.Mesh(new THREE.PlaneGeometry(5.2, 4.9), sealMat);
     sealMesh.position.set(0, -0.2, 0.6);
     /* Camera nhìn từ phía -Z: lật mặt phẳng để THẤY MẶT TRƯỚC (chữ đọc đúng) */
     sealMesh.rotation.y = Math.PI;
@@ -435,13 +445,13 @@ window.FlyScene = (function () {
 
     /* --- Phên bánh + người làm nghề (cảnh #origins phẳng 3D) ---
        Lùi rộng ra hai bên, mờ — không chui vào vùng chữ */
-    rackPlane = loadPlaneTexture('assets/story-rice-racks.webp', 20, 11.25, { rotY: -0.62, opacity: 0.3 });
+    rackPlane = loadPlaneTexture('assets/racks-3d.webp', 20, 11.25, { rotY: -0.62, opacity: 0.3 });
     rackPlane.position.set(10.4, 2.0, 40);
     rackPlane.userData.reveal = arcOf(new THREE.Vector3(3.5, 2.1, 22));
     rackPlane.userData.maxOpacity = 0.22;
     scene.add(rackPlane);
 
-    workerPlane = loadPlaneTexture('assets/story-worker.webp', 12.6, 8.4, { rotY: 0.6, opacity: 0.3 });
+    workerPlane = loadPlaneTexture('assets/worker-3d.webp', 12.6, 8.4, { rotY: 0.6, opacity: 0.3 });
     workerPlane.position.set(-9.2, 1.2, 52);
     workerPlane.userData.reveal = arcOf(new THREE.Vector3(4.5, 1.9, 34));
     workerPlane.userData.maxOpacity = 0.22;
@@ -465,18 +475,18 @@ window.FlyScene = (function () {
            texture xoay -(90°) khớp thẻ HTML .challenge-photo-sideways.
        mmmm: nén lại theo EXIF orientation 8, upright sẵn → không xoay.
        Lùi xa khỏi dải chữ, mờ — không đè lên panel nội dung. */
-    photoPlanes.push(loadPlaneTexture('assets/mm.webp', 5.73, 8.6, {
+    photoPlanes.push(loadPlaneTexture('assets/mm-3d.webp', 5.73, 8.6, {
       texRot: Math.PI / 2,
       rotY: 0.65,
       opacity: 0.42,
       position: [-7.6, 1.3, 101]
     }));
-    photoPlanes.push(loadPlaneTexture('assets/mmm.webp', 5.1, 9.18, {
+    photoPlanes.push(loadPlaneTexture('assets/mmm-3d.webp', 5.1, 9.18, {
       rotY: -0.62,
       opacity: 0.42,
       position: [7.4, 1.4, 119]
     }));
-    photoPlanes.push(loadPlaneTexture('assets/mmmm.webp', 6.27, 9.4, {
+    photoPlanes.push(loadPlaneTexture('assets/mmmm-3d.webp', 6.27, 9.4, {
       rotY: 0.65,
       opacity: 0.42,
       position: [-7.0, 1.3, 137]
@@ -516,6 +526,34 @@ window.FlyScene = (function () {
     return true;
   }
 
+  /* =========================================================
+     Tải texture lần lượt từng cái một + upload chủ động
+     (renderer.initTexture) trong khe rảnh — không để decode/texImage2D
+     rơi vào khung hình lúc người dùng đang cuộn (nguyên nhân khung dài).
+     ========================================================= */
+  function queueTexture(url, onTex) {
+    texQueue.push({ url: url, cb: onTex });
+    pumpTextures();
+  }
+
+  function pumpTextures() {
+    if (texBusy || !texQueue.length || !renderer) return;
+    texBusy = true;
+    const item = texQueue.shift();
+    new THREE.TextureLoader().load(item.url, function (tex) {
+      tex.encoding = THREE.sRGBEncoding;
+      try {
+        if (renderer.initTexture) renderer.initTexture(tex);   // upload ngay, ngoài khung cuộn
+      } catch (e) { /* bỏ qua */ }
+      item.cb(tex);
+      texBusy = false;
+      setTimeout(pumpTextures, 120);   // giãn cách: mỗi texture một khe rảnh
+    }, undefined, function () {
+      texBusy = false;
+      setTimeout(pumpTextures, 120);
+    });
+  }
+
   function loadPlaneTexture(url, w, h, opts) {
     opts = opts || {};
     const geo = new THREE.PlaneGeometry(w, h);
@@ -525,8 +563,7 @@ window.FlyScene = (function () {
       opacity: opts.opacity !== undefined ? opts.opacity : 0.4,
       side: THREE.DoubleSide
     });
-    new THREE.TextureLoader().load(url, function (tex) {
-      tex.encoding = THREE.sRGBEncoding;
+    queueTexture(url, function (tex) {
       if (opts.texRot) {
         tex.center.set(0.5, 0.5);
         tex.rotation = opts.texRot;
@@ -585,12 +622,13 @@ window.FlyScene = (function () {
       alphaTest: 0.04,
       side: THREE.DoubleSide
     });
-    new THREE.TextureLoader().load('assets/project-seal.webp', function (tex) {
-      tex.encoding = THREE.sRGBEncoding;
+    seal2Mesh = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 3.0), sealMat2);
+    seal2Mesh.visible = false;
+    queueTexture('assets/seal-3d.webp', function (tex) {
       sealMat2.map = tex;
       sealMat2.needsUpdate = true;
+      seal2Mesh.visible = true;
     });
-    seal2Mesh = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 3.0), sealMat2);
     seal2Mesh.position.set(center.x, center.y, center.z - 1.2);
     seal2Mesh.rotation.y = Math.PI;
     scene.add(seal2Mesh);

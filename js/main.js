@@ -32,6 +32,28 @@
     initReveal();
     initMap();
     initFlythrough();
+
+    /* Giải mã trước toàn bộ ảnh ngay sau khi DOM sẵn sàng (KHÔNG đợi 'load':
+       trên mạng chậm sự kiện load tới muộn, dễ rơi đúng lúc người dùng bắt đầu
+       cuộn). decode() chạy off-main nên ảnh không bị giải mã đồng bộ khi vẽ. */
+    setTimeout(preloadImages, 800);
+  }
+
+  function preloadImages() {
+    var imgs = Array.prototype.slice.call(document.querySelectorAll('img'));
+    imgs.forEach(function (img) {
+      try { img.loading = 'eager'; } catch (e) { /* trình duyệt cũ không hỗ trợ */ }
+    });
+    imgs.forEach(function (img) {
+      if (img.decode) img.decode().catch(function () {});
+    });
+    /* poster của video cũng nằm trong khung nhìn: nạp + giải mã trước như ảnh */
+    var vids = Array.prototype.slice.call(document.querySelectorAll('video[poster]'));
+    vids.forEach(function (v) {
+      var im = new Image();
+      im.src = v.getAttribute('poster');
+      if (im.decode) im.decode().catch(function () {});
+    });
   }
 
   /* ===================================================================

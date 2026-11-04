@@ -610,7 +610,7 @@ html.no-js .hero-seal-fallback { display: block; }
   border: 2px solid rgba(22, 99, 61, 0.9);
   box-shadow: 0 0 22px rgba(22, 99, 61, 0.55);
   animation: map-pulse 2.4s var(--ease-soft) infinite;
-  transition: border-color 0.6s var(--ease-soft), box-shadow 0.6s var(--ease-soft);
+  transition: border-color 0.6s var(--ease-soft);
 }
 .map-pulse-ring i {
   display: block;
@@ -680,7 +680,7 @@ html.reduced .map-pulse-ring { animation: none; }
   border-radius: 14px;
   overflow: hidden;
   background: var(--night-panel);
-  transition: box-shadow 0.8s var(--ease-soft), border-color 0.8s var(--ease-soft);
+  transition: border-color 0.8s var(--ease-soft);
 }
 
 .challenge-photo-thumb img { display: block; width: 100%; height: auto; }
@@ -692,11 +692,27 @@ img.challenge-photo-sideways {
   transform: rotate(-90deg);
 }
 
-/* Ảnh sáng lên khi đường lửa tới (JS thêm .is-lit) */
-.challenge-photo-thumb.is-lit {
-  border-color: rgba(255, 227, 163, 0.85);
-  box-shadow: 0 0 34px rgba(245, 166, 35, 0.45), 0 0 90px rgba(200, 80, 30, 0.25);
+/* Ảnh sáng lên khi đường lửa tới (JS thêm .is-lit).
+   Quầng sáng đặt trên lớp ::after đã raster sẵn, chỉ đổi opacity
+   (compositor) — không repaint box-shadow lớn trong lúc cuộn. */
+.challenge-photo-thumb {
+  position: relative;
+  overflow: visible;
 }
+.challenge-photo-thumb img { border-radius: 13px; }
+.challenge-photo-thumb::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 15px;
+  box-shadow: 0 0 34px rgba(245, 166, 35, 0.45), 0 0 90px rgba(200, 80, 30, 0.25);
+  opacity: 0;
+  transition: opacity 0.8s var(--ease-soft);
+  will-change: opacity;
+  pointer-events: none;
+}
+.challenge-photo-thumb.is-lit { border-color: rgba(255, 227, 163, 0.85); }
+.challenge-photo-thumb.is-lit::after { opacity: 1; }
 
 .story-copy { max-width: 52rem; }
 
@@ -712,7 +728,7 @@ img.challenge-photo-sideways {
   border-radius: 16px;
   padding: clamp(1.1rem, 2.4vh, 1.6rem) clamp(1rem, 2vw, 1.4rem);
   background: linear-gradient(180deg, #18110b, #100b07);
-  transition: border-color 0.6s var(--ease-soft), box-shadow 0.6s var(--ease-soft);
+  transition: border-color 0.6s var(--ease-soft);
 }
 .glass-card:hover { border-color: rgba(245, 166, 35, 0.5); }
 
