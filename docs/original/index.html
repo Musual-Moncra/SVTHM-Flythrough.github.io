@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHÚ HÒA ĐÔNG LẮM VIỆC — GEN “ZIỆT” MỞ LỐI!</title>
+  <meta name="description" content="Câu chuyện về làng nghề bánh tráng Phú Hòa Đông, những cơ hội việc làm chưa được nhìn thấy và thế hệ trẻ cùng mở lối.">
+
+  <!-- Open Graph & Twitter Meta Tags -->
+  <meta property="og:title" content="PHÚ HÒA ĐÔNG LẮM VIỆC — GEN “ZIỆT” MỞ LỐI!">
+  <meta property="og:description" content="HSU lửa bánh bền lâu - đậm sâu làng nghề!">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon SVG -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
+  <!-- Main Stylesheet -->
+  <script>
+    try {
+      document.documentElement.dataset.theme = localStorage.getItem('int-theme') === 'dark' ? 'dark' : 'light';
+    } catch (error) {
+      document.documentElement.dataset.theme = 'light';
+    }
+    document.documentElement.dataset.palette = 'white';
+  </script>
+  <link rel="stylesheet" href="css/style.css?v=story-52">
+  <link rel="stylesheet" href="js/vendor/leaflet/leaflet.css?v=story-15">
+</head>
+<body>
+
+  <!-- Ambient Grain Overlay -->
+  <div class="grain-overlay"></div>
+
+  <!-- Top Scroll Progress Bar -->
+  <div class="scroll-progress-container">
+    <div class="scroll-progress-bar" id="scroll-progress-bar"></div>
+  </div>
+
+  <!-- Custom Inertia Cursor -->
+  <div class="custom-cursor-dot"></div>
+  <div class="custom-cursor-ring"></div>
+
+  <!-- ===================================================================
+       NAVIGATION BAR
+       =================================================================== -->
+  <header class="navbar">
+    <a href="#hero" class="nav-brand" aria-label="Đại học Hoa Sen và Sinh Viên Thế Hệ Mới 2026 — về đầu trang">
+      <img class="school-logo school-logo-light" src="assets/HSU-B-VIE.png" alt="Đại học Hoa Sen — Tôn trọng sự khác biệt" width="152" height="75">
+      <img class="school-logo school-logo-dark" src="assets/HSU-W-VIE.png" alt="Đại học Hoa Sen — Tôn trọng sự khác biệt" width="152" height="75">
+      <img class="event-logo" src="assets/Logo2.png" alt="Sinh Viên Thế Hệ Mới 2026" width="112" height="75">
+    </a>
+
+    <!-- Chapter Fast Links -->
+    <nav class="nav-chapters" aria-label="Các mục nội dung">
+      <a href="#origins">Dự án</a>
+      <a href="#challenge">Câu Chuyện</a>
+      <a href="#core">Sứ Mệnh</a>
+      <a href="#evolution">Về chúng tôi</a>
+    </nav>
+    <div class="header-actions">
+      <label class="language-control" for="language-select">
+        <span class="language-control-icon" aria-hidden="true">文</span>
+        <select id="language-select" aria-label="Chọn ngôn ngữ" title="Chọn ngôn ngữ">
+          <option value="vi" selected>Tiếng Việt</option>
+          <option value="en">English</option>
+          <option value="ja">日本語</option>
+          <option value="ko">한국어</option>
+          <option value="zh-CN">中文</option>
+        </select>
+      </label>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Bật chế độ tối" aria-pressed="false" title="Bật chế độ tối">
+        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 15.2A8.4 8.4 0 0 1 8.8 3.6 8.7 8.7 0 1 0 20.4 15.2Z"></path></svg>
+        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path></svg>
+      </button>
+      <a href="#hero-3d-stage" class="nav-intro-link">Giới thiệu</a>
+    </div>
+    <details class="mobile-chapter-menu">
+        <summary>MENU <span aria-hidden="true">⌄</span></summary>
+        <nav class="mobile-chapter-links" aria-label="Đi đến mục">
+          <a href="#origins">Dự án</a>
+          <a href="#challenge">Câu Chuyện</a>
+          <a href="#core">Sứ Mệnh</a>
+          <a href="#evolution">Về chúng tôi</a>
+          <a href="#hero-3d-stage">Giới thiệu</a>
+        </nav>
+    </details>
+  </header>
+
+  <main>
+    <!-- ===================================================================
+         SECTION 00: HERO (CENTERED 3D STAGE)
+         =================================================================== -->
+    <section class="hero-section" id="hero">
+      <div class="hero-ambient-glow"></div>
+
+      <!-- Status Pill -->
+      <div class="hero-meta-badge">
+        <span class="status-ping"></span>
+        <span>CÂU CHUYỆN TỪ LÀNG NGHỀ BÁNH TRÁNG PHÚ HÒA ĐÔNG</span>
+      </div>
+
+      <h1 class="hero-title">PHÚ HÒA ĐÔNG LẮM VIỆC – GEN “ZIỆT” MỞ LỐI!</h1>
+      <p class="hero-subtitle"><strong>HSU lửa bánh bền lâu - đậm sâu làng nghề!</strong></p>
+
+      <!-- 3D HERO CANVAS STAGE (CENTERED) -->
+      <div class="hero-3d-stage" id="hero-3d-stage" aria-label="Biểu trưng 3D của dự án">
+        <canvas id="hero-3d-canvas" class="hero-3d-canvas"></canvas>
+
+        <ol class="logo-orbit-words" aria-label="Phú Hòa Đông, Cơ hội, Mở lối, Di sản">
+          <li>Phú Hòa Đông</li>
+          <li>Cơ hội</li>
+          <li>Mở lối</li>
+          <li>Di Sản</li>
+        </ol>
+
+        <!-- Orbital HUD Overlay -->
+        <div class="hero-stage-hud" aria-hidden="true"></div>
+      </div>
+      <p class="hero-rotation-hint">⟳ Tự xoay · Kéo biểu trưng để xoay bằng tay</p>
+
+      <!-- CTA Buttons -->
+      <div class="hero-cta-group">
+        <a href="#origins" class="btn-primary">
+          <span>Bắt đầu câu chuyện</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <a href="#origins" class="hero-scroll-cue" aria-label="Cuộn xuống để khám phá">
+        <div class="scroll-mouse-icon">
+          <div class="scroll-wheel"></div>
+        </div>
+        <span>Cuộn để khám phá</span>
+      </a>
+    </section>
+
+    <div class="story-container">
+
+      <!-- ===================================================================
+           CHAPTER 01: ORIGINS (KHỞI NGUỒN)
+           =================================================================== -->
+      <section class="story-chapter" id="origins">
+        <div class="chapter-header">
+          <div class="chapter-badge" data-story-reveal>DỰ ÁN • ĐIỂM KHỞI ĐẦU</div>
+          <h2 class="chapter-title" data-story-reveal>Một tấm bản đồ để quê nhà hiện ra như một nơi có cơ hội.</h2>
+          <p class="chapter-description" data-story-reveal>Phú Hòa Đông không chỉ có một nghề truyền thống cần gìn giữ. Nơi đây còn có những công việc, kỹ năng và ý tưởng đang chờ được kết nối với người trẻ.</p>
+        </div>
+        <div class="editorial-grid">
+          <div class="story-paragraphs project-copy">
+            <p class="project-lead" data-story-reveal>Đằng sau mỗi chiếc bánh tráng là sinh kế của một gia đình, ký ức của một vùng đất và một nghề đang được trao qua nhiều thế hệ.</p>
+            <p data-story-reveal>Phú Hòa Đông, Củ Chi là nơi nghề bánh tráng được công nhận là nghề truyền thống của Thành phố Hồ Chí Minh từ năm 2024. Nghề vẫn được làm bằng đôi tay, bằng máy móc hiện đại và bằng những cách làm mới đang mở ra tiềm năng cho sản phẩm lẫn du lịch làng nghề.</p>
+            <p data-story-reveal>Từ những chuyến tìm hiểu thực tế, nhóm nhận ra rằng câu chuyện không chỉ là làm sao để gìn giữ nghề. Những cơ hội ở địa phương — từ sản xuất, kinh doanh đến truyền thông, thiết kế, công nghệ và trải nghiệm — còn rời rạc, chưa được giới thiệu để người trẻ thấy kỹ năng của mình có thể góp vào đâu.</p>
+            <p class="story-turn" data-story-reveal>Vì vậy, dự án đề xuất xây dựng <strong>bản đồ cơ hội nghề nghiệp tại quê nhà</strong>: thu thập và xác minh nhu cầu, rồi trình bày từng cơ hội đủ rõ để người trẻ có thể tìm thấy, cân nhắc và kết nối.</p>
+            <p data-story-reveal>Bản đồ mở ra nhiều cách tham gia: việc làm, học nghề, cộng tác freelance, kinh doanh và trải nghiệm làng nghề. Đó có thể là một công việc tại cơ sở, một thiết kế bao bì, một nội dung kể chuyện sản phẩm, hay một tour giúp khách hiểu hơn về người làm bánh.</p>
+            <p data-story-reveal>Dự án không yêu cầu tất cả người trẻ phải trở về quê. Dự án muốn họ nhìn thấy quê nhà đang có gì — để tự chọn cách làm việc, học hỏi hay đóng góp phù hợp với mình.</p>
+          </div>
+          <div class="project-aside">
+            <figure class="story-visual story-visual-project story-visual-project-top" data-story-reveal>
+              <img src="assets/story-rice-racks.webp" alt="Những phên tre đan xếp nối nhau để phơi bánh tráng" width="2400" height="1350" loading="lazy" decoding="async">
+              <figcaption>Những phên bánh nối dài trong nhịp lao động quen thuộc của làng nghề.</figcaption>
+            </figure>
+            <div class="editorial-quote-block" data-story-reveal>
+              <p class="editorial-quote-text">“Quê nhà đang có những cơ hội nào mà người trẻ chưa nhìn thấy?”</p>
+              <p class="editorial-story-detail">Đó là câu hỏi mở đầu cho bản đồ. Khi nhu cầu được gọi đúng tên và kỹ năng được nhìn thấy, một nơi để nhớ cũng có thể trở thành nơi để bắt đầu.</p>
+            </div>
+            <figure class="story-visual story-visual-project story-visual-project-bottom" data-story-reveal>
+              <img src="assets/story-worker.webp" alt="Người làm nghề đứng bên những phên bánh tráng đang phơi tại Phú Hòa Đông" width="2000" height="1333" loading="lazy" decoding="async">
+              <figcaption>Một nghề được giữ nhịp bằng đôi tay, kinh nghiệm và công việc của những gia đình trong làng.</figcaption>
+            </figure>
+          </div>
+        </div>
+        <section class="origin-map-section" id="origin-map" aria-labelledby="origin-map-title" data-story-reveal>
+          <div class="chapter-badge">ĐỊA ĐIỂM · PHÚ HÒA ĐÔNG</div>
+          <h3 class="origin-map-title" id="origin-map-title">Nơi câu chuyện bắt đầu</h3>
+          <p class="origin-map-caption">Vùng làng nghề bánh tráng Phú Hòa Đông, Củ Chi</p>
+          <div class="origin-map-frame" id="origin-leaflet-map" role="application" aria-label="Bản đồ tương tác khu vực làng bánh tráng Phú Hòa Đông, có thể kéo và phóng to trong giới hạn khu vực"></div>
+          <a class="map-directions-link" href="https://www.google.com/maps/place/L%C3%A0ng+B%C3%A1nh+Tr%C3%A1ng+C%E1%BB%A7+Chi/@11.0279561,106.5648535,15.78z/data=!4m7!3m6!1s0x3174d3a0c53bd2b7:0xe5e4b449f9da688a!4b1!8m2!3d11.0309829!4d106.565394!16s%2Fg%2F11fd69_65q!18m1!1e1" target="_blank" rel="noopener noreferrer">Mở vị trí trên Google Maps ↗</a>
+        </section>
+      </section>
+
+      <!-- ===================================================================
+           CHAPTER 02: THE CHALLENGE (THÁCH THỨC CẦN GIẢI QUYẾT)
+           =================================================================== -->
+      <section class="story-chapter" id="challenge">
+        <div class="chapter-header">
+          <div class="chapter-badge" data-story-reveal>CÂU CHUYỆN • CHÚNG TÔI TÌM ĐẾN PHÚ HÒA ĐÔNG</div>
+          <h2 class="chapter-title" data-story-reveal>Chúng tôi đến để nhìn thấy những lối đi đang có.</h2>
+        </div>
+        <figure class="poem-quote-box" data-story-reveal>
+          <blockquote>
+            Quê hương là gì hả mẹ<br>
+            Mà cô giáo dạy phải yêu?<br>
+            Quê hương là gì hả mẹ<br>
+            Ai đi xa cũng nhớ nhiều?
+          </blockquote>
+          <figcaption><cite>“Quê Hương” — Đỗ Trung Quân</cite></figcaption>
+        </figure>
+        <p class="chapter-description challenge-question" data-story-reveal><span>Nếu quê nhà là nơi ta luôn nhớ khi đi xa,</span><span class="challenge-question-followup">vì sao người trẻ lại thường nghĩ phải đi thật xa mới tìm được cơ hội?</span></p>
+        <div class="challenge-photo-gallery" role="group" aria-label="Hình ảnh chuyến đi thực tế tại làng nghề bánh tráng Phú Hòa Đông">
+          <figure class="challenge-photo-thumb" data-story-reveal>
+            <img class="challenge-photo-sideways" src="assets/mm.jpg" alt="Người thợ xếp bánh tráng lên giàn phơi ngoài trời" width="2560" height="1707" loading="lazy" decoding="async">
+          </figure>
+          <figure class="challenge-photo-thumb" data-story-reveal>
+            <img src="assets/mmm.JPG" alt="Thành viên nhóm ghi hình hoạt động làm bánh tráng" width="1305" height="2347" loading="lazy" decoding="async">
+          </figure>
+          <figure class="challenge-photo-thumb" data-story-reveal>
+            <img src="assets/mmmm.JPG" alt="Thành viên nhóm tìm hiểu giàn phơi bánh tráng tại làng nghề" width="3456" height="2304" loading="lazy" decoding="async">
+          </figure>
+        </div>
+        <div class="story-paragraphs chapter-narrative story-copy">
+          <p data-story-reveal>Phú Hòa Đông đến với nhóm qua một mối liên kết thân thuộc: đó là quê hương của một thành viên. Những chuyến đi thực tế đưa chúng tôi gặp người làm nghề, hộ kinh doanh và những người đang tìm cách giữ cho làng nghề tiếp tục sống.</p>
+          <p data-story-reveal>Chúng tôi nhận ra câu chuyện không đơn giản là “quê không có việc”. Cơ hội vẫn hiện diện — trong sản xuất, kinh doanh, truyền thông, thiết kế, bán hàng, công nghệ và trải nghiệm làng nghề — nhưng còn phân tán, khó nhìn thấy và chưa kết nối với kỹ năng của người trẻ.</p>
+          <p data-story-reveal>Vì thế, nhóm bắt đầu bằng cách lắng nghe nhu cầu tại chỗ, xác minh từng cơ hội và ghi rõ công việc, hình thức hợp tác, kỹ năng, thời gian, quyền lợi cùng địa điểm. Từ dữ liệu ấy, bản đồ giúp người trẻ tìm kiếm, nhận diện và tiếp cận cơ hội dễ dàng hơn.</p>
+          <p data-story-reveal>Một nghệ nhân có thể cần người biết thiết kế, truyền thông hay bán hàng; một người trẻ có thể chưa từng làm bánh nhưng lại có đúng kỹ năng mà cơ sở đang cần. Đôi khi, khoảng cách giữa hai bên chỉ là chưa nhìn thấy nhau.</p>
+          <p class="story-turn" data-story-reveal>Chúng tôi không đến Phú Hòa Đông để tìm một công việc có sẵn. Chúng tôi đến để nhìn thấy những gì đang có — và dùng chính năng lực của người trẻ để mở lối.</p>
+        </div>
+        <div class="cards-grid-3">
+          <article class="glass-card" data-story-reveal><div class="card-num">01 // QUÊ NHÀ</div><h3 class="card-title">Một mối liên kết thân thuộc</h3><p class="card-body">Phú Hòa Đông là quê hương của một thành viên trong nhóm — điểm khởi đầu cho những chuyến đi thực tế và câu hỏi về cơ hội tại quê nhà.</p></article>
+          <article class="glass-card" data-story-reveal><div class="card-num">02 // LẮNG NGHE</div><h3 class="card-title">Cơ hội cần được nhìn thấy</h3><p class="card-body">Từ câu chuyện của người làm nghề, nhóm tìm hiểu điều gì đang có, điều gì còn thiếu và những kỹ năng nào có thể giúp ích.</p></article>
+          <article class="glass-card" data-story-reveal><div class="card-num">03 // KẾT NỐI</div><h3 class="card-title">Không áp đặt một lối trở về</h3><p class="card-body">Bản đồ giúp người trẻ tự cân nhắc cách làm việc, học hỏi hay đóng góp; mỗi người có thể chọn con đường phù hợp với mình.</p></article>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           CHAPTER 03: THE MISSION (SỨ MỆNH)
+           =================================================================== -->
+      <section class="story-chapter" id="core">
+        <div class="chapter-header">
+          <div class="chapter-badge" data-story-reveal>SỨ MỆNH • NHÌN THẤY CƠ HỘI</div>
+          <h2 class="chapter-title" data-story-reveal>Nhìn thấy cơ hội · Kết nối kỹ năng · Mở lối tương lai</h2>
+          <p class="chapter-description" data-story-reveal>Giúp người trẻ nhận ra quê nhà đang có gì trước khi tự quyết định mình muốn trở về, ở lại hay <span class="mission-description-ending">đồng hành theo một cách khác.</span></p>
+        </div>
+        <div class="story-paragraphs chapter-narrative story-copy">
+          <p data-story-reveal>Dự án bắt đầu từ khoảng cách giữa người trẻ, kỹ năng và cơ hội tại quê nhà. Nhiều bạn trẻ có thể làm truyền thông, thiết kế, công nghệ, kinh doanh và sáng tạo; các cơ sở địa phương cũng có nhu cầu thực tế. Điều còn thiếu là cách để hai phía nhìn thấy và tìm được nhau.</p>
+          <p data-story-reveal>Sứ mệnh của chúng tôi không phải đưa tất cả người trẻ trở về quê. Chúng tôi muốn giúp họ nhìn thấy quê mình đang có gì trước khi quyết định có muốn trở về hay không.</p>
+          <p class="story-turn" data-story-reveal>Khi kỹ năng của người trẻ gặp đúng nhu cầu địa phương, người trẻ có thêm cơ hội làm việc, <span class="mission-story-turn-followup">học hỏi và đóng góp; làng nghề có thêm nguồn lực để tiếp tục phát triển.</span></p>
+        </div>
+        <figure class="story-film" data-story-reveal>
+          <div class="story-film-heading">
+            <div class="chapter-badge">GHI NHẬN TỪ CHUYẾN ĐI THỰC TẾ</div>
+            <h3>Nghe câu chuyện từ nơi nghề đang sống</h3>
+            <p>Những cuộc gặp và quan sát tại Phú Hòa Đông giúp nhóm hiểu rõ hơn điều gì đang có, điều gì cần được kết nối.</p>
+          </div>
+          <video controls playsinline preload="metadata" poster="assets/story-worker.webp" aria-label="Phim ghi lại chuyến đi thực tế của nhóm sinh viên đến làng nghề bánh tráng Phú Hòa Đông">
+            <source src="assets/story-fieldwork-720p.mp4" type="video/mp4">
+            Trình duyệt của bạn không hỗ trợ phát video.
+          </video>
+          <figcaption>Chuyến đi thực tế của nhóm sinh viên và những người đang tiếp nối nghề bánh tráng.</figcaption>
+        </figure>
+        <div class="cards-grid-3 mission-pillars">
+          <article class="glass-card" data-story-reveal><div class="card-num">01 // NHÌN THẤY</div><h3 class="card-title">Gọi tên những cơ hội đang có</h3><p class="card-body">Lắng nghe và làm rõ nhu cầu thực tế tại các cơ sở, hộ kinh doanh và làng nghề.</p></article>
+          <article class="glass-card" data-story-reveal><div class="card-num">02 // KẾT NỐI</div><h3 class="card-title">Đưa kỹ năng đến đúng nơi cần</h3><p class="card-body">Tạo điểm gặp giữa người trẻ có năng lực và địa phương đang tìm thêm nguồn lực.</p></article>
+          <article class="glass-card" data-story-reveal><div class="card-num">03 // MỞ LỐI</div><h3 class="card-title">Để giá trị được trao tiếp</h3><p class="card-body">Tiếp sức cho nghề truyền thống bằng ý tưởng và năng lực mới, để mỗi người tự chọn cách đồng hành.</p></article>
+        </div>
+        <div class="editorial-note" data-story-reveal>
+          <span class="note-kicker">TINH THẦN CỦA DỰ ÁN</span>
+          <p class="editorial-note-slogan"><strong>“HSU lửa bánh bền lâu – đậm sâu làng nghề”</strong></p>
+          <p class="editorial-note-copy">Giữ lửa không chỉ là gìn giữ điều đã có, mà còn tiếp thêm sức sống để những giá trị ấy được trao qua thế hệ tiếp theo.</p>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           ABOUT: ĐỘI NGŨ LIÊN NGÀNH
+           =================================================================== -->
+      <section class="story-chapter" id="evolution">
+        <div class="epilogue-box" id="epilogue">
+          <div class="chapter-header">
+            <div class="chapter-badge" data-story-reveal>VỀ CHÚNG TÔI • ĐỘI NGŨ LIÊN NGÀNH</div>
+            <h2 class="epilogue-title" data-story-reveal>Mỗi chuyên môn góp một cách nhìn, <span class="epilogue-title-keep">chung một hướng về quê nhà.</span></h2>
+            <p class="epilogue-text" data-story-reveal>Chúng tôi là nhóm sinh viên Trường Đại học Hoa Sen, cùng tìm cách biến hiểu biết, kỹ năng và sức sáng tạo của người trẻ thành giá trị cho Phú Hòa Đông.</p>
+          </div>
+        <figure class="story-visual story-visual-team-poster" data-story-reveal>
+          <img src="assets/1791011779914_5072680446738567220_5072680446738567220_32115805b6f3f61bce65d92a66db0913.jpg" alt="Poster giới thiệu dự án PHÚ HÒA ĐÔNG LẮM VIỆC – GEN ‘ZIỆT’ MỞ LỐI và các thành viên nhóm" width="1920" height="1080" loading="lazy" decoding="async">
+          <figcaption>Nhóm sinh viên Trường Đại học Hoa Sen cùng thực hiện dự án.</figcaption>
+        </figure>
+        <div class="story-paragraphs chapter-narrative story-copy">
+          <p data-story-reveal>Nhóm quy tụ sinh viên thuộc năm lĩnh vực: Tâm lý học, Công nghệ phần mềm, Luật kinh tế, Quan hệ công chúng và Kinh doanh Quốc tế. Sự đa dạng ấy giúp chúng tôi tiếp cận dự án từ nhiều phía — nghiên cứu để hiểu vấn đề, truyền thông để kể câu chuyện, công nghệ để xây dựng giải pháp và kinh doanh để tìm hướng phát triển.</p>
+          <p data-story-reveal>Chúng tôi bắt đầu bằng những chuyến đi thực tế, lắng nghe người làm nghề và tìm hiểu nhu cầu đang có tại Phú Hòa Đông. Từ đó, nhóm xác định vấn đề, xây dựng giải pháp và tiếp tục kiểm chứng bằng những kết nối thật.</p>
+          <p class="story-turn" data-story-reveal>Với tinh thần Gen “Ziệt”, người trẻ không chỉ đi tìm cơ hội. Chúng tôi cũng có thể tạo ra cơ hội bằng kiến thức, kỹ năng và sức sáng tạo của mình — cùng làng nghề mở thêm những lối đi mới.</p>
+        </div>
+        <div class="cards-grid-3 team-pillars">
+          <article class="glass-card" data-story-reveal><div class="card-num">01 // LẮNG NGHE</div><h3 class="card-title">Bắt đầu từ nhu cầu thật</h3><p class="card-body">Gặp gỡ và tìm hiểu người làm nghề, hộ kinh doanh cùng những người trẻ đang cân nhắc con đường của mình.</p></article>
+          <article class="glass-card" data-story-reveal><div class="card-num">02 // KẾT HỢP</div><h3 class="card-title">Nhiều chuyên môn, một giải pháp</h3><p class="card-body">Nghiên cứu, truyền thông, công nghệ và kinh doanh cùng góp phần làm cơ hội địa phương rõ ràng, dễ tiếp cận hơn.</p></article>
+          <article class="glass-card" data-story-reveal><div class="card-num">03 // ĐỒNG HÀNH</div><h3 class="card-title">Người trẻ cùng tạo giá trị</h3><p class="card-body">Dùng năng lực của thế hệ mình để hỗ trợ làng nghề và mở ra lựa chọn mới cho cộng đồng.</p></article>
+        </div>
+        <div class="banner-gallery">
+          <figure class="banner-gallery-item" data-story-reveal>
+            <a href="assets/banner-svthm-1.webp" target="_blank" rel="noopener" aria-label="Mở banner 1 ở kích thước đầy đủ"><img src="assets/banner-svthm-1.webp" alt="Banner dự án: giàn phơi bánh tráng, biểu trưng Phú Hòa Đông lắm việc – Gen ‘Ziệt’ mở lối và nhóm sinh viên chụp cùng người làm nghề tại làng bánh tráng" width="1600" height="2263" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="banner-gallery-item" data-story-reveal>
+            <a href="assets/banner-svthm-2.webp" target="_blank" rel="noopener" aria-label="Mở banner 2 ở kích thước đầy đủ"><img src="assets/banner-svthm-2.webp" alt="Banner dự án với thông điệp HSU lửa bánh bền lâu, đậm sâu làng nghề: bốn ảnh về nghề làm bánh tráng cùng phần giới thiệu dự án" width="1600" height="2263" loading="lazy" decoding="async"></a>
+          </figure>
+        </div>
+          <div class="hero-cta-group"><a href="#origins" class="btn-primary"><span>Đọc lại câu chuyện</span></a><a href="#hero" class="btn-outline"><span>Trở về đầu trang ↑</span></a></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ===================================================================
+       FOOTER
+       =================================================================== -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-copyright">
+        &copy; 2026 <strong>PHÚ HÒA ĐÔNG LẮM VIỆC – GEN “ZIỆT” MỞ LỐI</strong>. Một dự án được triển khai bởi nhóm sinh viên Trường Đại học Hoa Sen.
+      </div>
+      <div class="footer-logos" role="group" aria-label="Biểu trưng dự án, trường và chương trình">
+        <img class="footer-logo footer-project-logo" src="assets/project-seal-transparent.png" alt="Biểu trưng dự án Phú Hòa Đông lắm việc – Gen ‘Ziệt’ mở lối" width="82" height="82">
+        <img class="footer-logo footer-school-logo footer-school-logo-light" src="assets/HSU-B-VIE.png" alt="Trường Đại học Hoa Sen — Tôn trọng sự khác biệt" width="152" height="75">
+        <img class="footer-logo footer-school-logo footer-school-logo-dark" src="assets/HSU-W-VIE.png" alt="Trường Đại học Hoa Sen — Tôn trọng sự khác biệt" width="152" height="75">
+        <img class="footer-logo footer-event-logo" src="assets/LogoForINT.png" alt="Sinh viên Thế hệ Mới 2026" width="116" height="78">
+      </div>
+      <div class="footer-links">
+        <a href="#hero">Về đầu trang</a>
+        <a href="#origins">Khởi nguồn</a>
+        <a href="#core">Cơ hội</a>
+      </div>
+    </div>
+  </footer>
+<!-- ===================================================================
+       VENDOR LIBRARIES (Local vendor files for zero latency & offline support)
+       =================================================================== -->
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/vendor/gsap.min.js"></script>
+  <script src="js/vendor/ScrollTrigger.min.js"></script>
+  <script src="js/vendor/lenis.min.js"></script>
+
+  <!-- Application Logic -->
+  <script src="js/vendor/leaflet/leaflet.js?v=story-15"></script>
+  <script src="js/region-map.js?v=story-16"></script>
+  <script src="js/hero3d.js?v=story-15"></script>
+  <script src="js/main.js?v=story-17"></script>
+</body>
+</html>
